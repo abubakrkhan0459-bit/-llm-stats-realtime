@@ -6,7 +6,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "LLMStatsBlazor/bin/Release/net10.0/wwwroot",
+    "public": "LLMStatsBlazor/bin/Release/net10.0/wwwroot/wwwroot",
     "ignore": [
       "firebase.json",
       "**/.*",
