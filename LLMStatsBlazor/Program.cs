@@ -11,15 +11,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 // Register FirestoreDataService
-builder.Services.AddScoped<FirestoreDataService>(sp =>
-{
-    var httpClient = new HttpClient
-    {
-        BaseAddress = new Uri("https://firestore.googleapis.com/v1/projects/llm-stats-realtime/databases/(default)/documents/")
-    };
-    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-    return new FirestoreDataService(httpClient);
-});
+builder.Services.AddScoped<FirestoreDataService>();
 
 // Register MockDataService as fallback
 builder.Services.AddSingleton<MockDataService>();

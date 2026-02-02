@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LLMStatsBlazor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3451d65f2726e97e3a872c88fcc48e673c5b533")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2114ceb79a1cee4ac09cbea4de73b7d29562e390")]
 [assembly: System.Reflection.AssemblyProductAttribute("LLMStatsBlazor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LLMStatsBlazor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

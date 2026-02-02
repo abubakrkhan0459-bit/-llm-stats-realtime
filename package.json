@@ -1,0 +1,24 @@
+{
+  "name": "webiste1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "seed-firestore.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abubakrkhan0459-bit/-llm-stats-realtime.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abubakrkhan0459-bit/-llm-stats-realtime/issues"
+  },
+  "homepage": "https://github.com/abubakrkhan0459-bit/-llm-stats-realtime#readme",
+  "dependencies": {
+    "firebase-admin": "^13.6.0"
+  }
+}
