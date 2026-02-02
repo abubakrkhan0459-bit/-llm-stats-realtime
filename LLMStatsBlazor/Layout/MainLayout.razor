@@ -1,0 +1,67 @@
+@inherits LayoutComponentBase
+
+<div class="background-container">
+    <canvas id="particles"></canvas>
+    <div class="gradient-overlay"></div>
+</div>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-brand">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">LLM Stats</span>
+                <span class="logo-badge">Realtime</span>
+            </div>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-link active">Home</a></li>
+        </ul>
+    </div>
+ </nav>
+
+ <!-- GOOGLE ADS PLACEHOLDER: Global Header Ad -->
+ <!-- Ad unit ID: LLMStats_Global_Header -->
+ <!-- Ad sizes: Mobile: 320x100, Tablet: 728x90, Desktop: 970x90 -->
+ <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+ <main>
+     @Body
+ </main>
+
+ <!-- GOOGLE ADS PLACEHOLDER: Global Footer Ad -->
+ <!-- Ad unit ID: LLMStats_Global_Footer -->
+ <!-- Ad sizes: Mobile: 320x50, Tablet: 728x90, Desktop: 728x90 -->
+ <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+ <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="footer-logo-text">
+                        <span class="footer-logo-main">LLM Stats</span>
+                        <span class="footer-logo-sub">Realtime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 LLM Stats Realtime. All benchmarks and metrics are for informational purposes.</p>
+        </div>
+    </div>
+</footer>

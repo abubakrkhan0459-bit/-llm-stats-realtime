@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Components
+@inject IJSRuntime JSRuntime
+
+<div class="google-ad-container" data-ad-unit="@AdUnitId">
+    @if (!IsReady)
+    {
+        <div class="ad-placeholder">
+            <div class="ad-placeholder-content">
+                <svg class="ad-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                <span class="ad-text">Advertisement</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div id="@AdContainerId" class="google-ad"></div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string AdUnitId { get; set; } = "ca-pub-XXXXXXXXXXXXXXXX";
+
+    [Parameter]
+    public string Slot { get; set; } = "0000000000";
+
+    [Parameter]
+    public string AdSize { get; set; } = "responsive";
+
+    [Parameter]
+    public bool IsReady { get; set; } = false;
+
+    private string AdContainerId => $"ad-{Guid.NewGuid():N}";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && IsReady)
+        {
+            await InitializeAd();
+        }
+    }
+
+    private async Task InitializeAd()
+    {
+        await Task.Delay(100);
+
+        await JSRuntime.InvokeVoidAsync("blazorExtensions.initializeGoogleAd", new
+        {
+            adUnitId = AdUnitId,
+            slot = Slot,
+            containerId = AdContainerId,
+            size = AdSize
+        });
+    }
+}

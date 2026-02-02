@@ -1,0 +1,343 @@
+@page "/"
+@inject MockDataService DataService
+@inject IJSRuntime JSRuntime
+
+<PageTitle>LLM Stats Realtime</PageTitle>
+
+<div class="dashboard">
+    <div class="hero-section">
+        <div class="hero-title">
+            <h1>Live LLM Rankings</h1>
+            <p class="subtitle">Real-time benchmarks for 50+ models</p>
+        </div>
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            Updated: 1/31/2026
+        </div>
+    </div>
+
+    <!-- GOOGLE ADS PLACEHOLDER: Homepage Top Banner -->
+    <!-- Ad unit ID: LLMStats_Home_Banner -->
+    <!-- Ad sizes: Mobile: 320x100, Tablet: 728x90, Desktop: 970x90 -->
+    <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+    <div class="search-section">
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" name="search" @bind="searchTerm" @bind:event="oninput" placeholder="Search models by name, company, or requirements..." autocomplete="off">
+            @if (!string.IsNullOrEmpty(searchTerm))
+            {
+                <button class="search-clear" @onclick="ClearSearch">✕</button>
+            }
+        </div>
+    </div>
+
+    <!-- Highlights Dashboard Panel - Key Metrics Overview -->
+    <HighlightsPanel />
+    
+    <!-- Spacer to prevent overlap -->
+    <div style="height: 32px; clear: both;"></div>
+
+    <!-- GOOGLE ADS PLACEHOLDER: Homepage In-Content Ad -->
+    <!-- Ad unit ID: LLMStats_Home_InContent -->
+    <!-- Ad sizes: Mobile: 300x250, Tablet: 336x280, Desktop: 728x90 -->
+    <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+    @if (isLoading)
+    {
+        <div style="text-align: center; padding: 50px; color: var(--primary);">
+            <p>Loading models from Firebase placeholder...</p>
+        </div>
+    }
+    else
+    {
+        <div class="dashboard-grid">
+            <div class="column-left">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h2>Quick Stats</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Models</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Benchmarks</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Live Updates</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">#1</div>
+                            <div class="stat-label">GPT-5.2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h2>Trends</h2>
+                    </div>
+                    <div class="trends-chart">
+                        <div class="chart-legend">
+                            <span class="trend-stat trend-accuracy">Accuracy +12%</span>
+                            <span class="trend-stat trend-speed">Speed +8%</span>
+                            <span class="trend-stat trend-cost">Cost +23%</span>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-y-axis">
+                                <span>100%</span>
+                                <span>50%</span>
+                                <span>0%</span>
+                            </div>
+                            <div class="chart-bars-wrapper">
+                                <div class="chart-bar-group">
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar" style="height: 70%; --target-height: 70%;" data-value="70%" data-month="Sep"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-bar-group">
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar" style="height: 75%; --target-height: 75%;" data-value="75%" data-month="Oct"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-bar-group">
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar" style="height: 82%; --target-height: 82%;" data-value="82%" data-month="Nov"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-bar-group">
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar" style="height: 88%; --target-height: 88%;" data-value="88%" data-month="Dec"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-bar-group">
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar" style="height: 92%; --target-height: 92%;" data-value="92%" data-month="Jan"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-x-axis">
+                                <span>Sep</span>
+                                <span>Oct</span>
+                                <span>Nov</span>
+                                <span>Dec</span>
+                                <span>Jan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column-center">
+                <div class="card card-main">
+                    <div class="card-header">
+                        <h2>Top Models</h2>
+                        <div class="type-tabs">
+                            <button class="tab-btn @(selectedType == "all" ? "active" : "")" @onclick="@(() => SelectType("all"))">All</button>
+                            <button class="tab-btn @(selectedType == "proprietary" ? "active" : "")" @onclick="@(() => SelectType("proprietary"))">Proprietary</button>
+                            <button class="tab-btn @(selectedType == "opensource" ? "active" : "")" @onclick="@(() => SelectType("opensource"))">Open Source</button>
+                        </div>
+                    </div>
+                    <div class="rankings-list">
+                        @foreach (var model in FilteredModels.Select((m, i) => new { Model = m, Index = i }))
+                        {
+                            var rankClass = model.Index == 0 ? "gold" : model.Index == 1 ? "silver" : model.Index == 2 ? "bronze" : "";
+                            <div class="model-card" data-type="@model.Model.Type">
+                                <div class="model-rank @rankClass">@(model.Index + 1)</div>
+                                <div class="model-details">
+                                    <div class="model-name">@model.Model.Name</div>
+                                    <div class="model-company">@model.Model.Company</div>
+                                    <div class="model-tags">
+                                        <span class="model-tag @(model.Model.Type == "opensource" ? "opensource" : "")">
+                                            @(model.Model.Type == "opensource" ? "Open Source" : "Proprietary")
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="column-right">
+                <div class="card card-highlight">
+                    <div class="card-header">
+                        <h2>⚡ Compare Models</h2>
+                    </div>
+                    <div class="compare-tool">
+                        <div class="compare-selectors">
+                            <select class="compare-select" id="model-a-select" name="modelA" @bind="modelAName">
+                                @foreach (var model in uniqueModels)
+                                {
+                                    <option value="@model.Name">@model.Name</option>
+                                }
+                            </select>
+                            <div class="vs-badge">VS</div>
+                            <select class="compare-select" id="model-b-select" name="modelB" @bind="modelBName">
+                                @foreach (var model in uniqueModels)
+                                {
+                                    <option value="@model.Name">@model.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="compare-results">
+                            @if (ModelA != null)
+                            {
+                                <div class="compare-card">
+                                    <h3>@ModelA.Name</h3>
+                                    <p class="compare-company">@ModelA.Company</p>
+                                    <p class="compare-rank">Rank #@ModelA.Rank</p>
+                                    <p class="compare-desc">@(ModelA.Description.Length > 80 ? ModelA.Description.Substring(0, 80) + "..." : ModelA.Description)</p>
+                                </div>
+                            }
+                            @if (ModelB != null)
+                            {
+                                <div class="compare-card">
+                                    <h3>@ModelB.Name</h3>
+                                    <p class="compare-company">@ModelB.Company</p>
+                                    <p class="compare-rank">Rank #@ModelB.Rank</p>
+                                    <p class="compare-desc">@(ModelB.Description.Length > 80 ? ModelB.Description.Substring(0, 80) + "..." : ModelB.Description)</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GOOGLE ADS PLACEHOLDER: Homepage Sidebar Ad 1 -->
+                <!-- Ad unit ID: LLMStats_Home_Sidebar1 -->
+                <!-- Ad sizes: Mobile: 300x250, Tablet: 300x250, Desktop: 300x600 -->
+                <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h2>🔓 Open Source Leaders</h2>
+                    </div>
+                    <div class="opensource-list">
+                        @foreach (var model in openSourceModels.Take(10))
+                        {
+                            <div class="opensource-item">
+                                <div class="os-title">@model.Name</div>
+                                <div class="os-company">
+                                    <span>@model.Company</span>
+                                    <span>#@model.Rank</span>
+                                </div>
+                            </div>
+                         }
+                    </div>
+                </div>
+
+                <!-- GOOGLE ADS PLACEHOLDER: Homepage Sidebar Ad 2 -->
+                <!-- Ad unit ID: LLMStats_Home_Sidebar2 -->
+                <!-- Ad sizes: Mobile: 300x250, Tablet: 300x250, Desktop: 300x250 -->
+                <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+            </div>
+        </div>
+    }
+
+    <!-- GOOGLE ADS PLACEHOLDER: Homepage Footer Ad -->
+    <!-- Ad unit ID: LLMStats_Home_Footer -->
+    <!-- Ad sizes: Mobile: 320x50, Tablet: 728x90, Desktop: 728x90 -->
+    <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
+
+    <div class="ai-notice">Rankings compiled by AI from LMSYS, Vellum, LiveCodeBench, and SWE-Bench sources.</div>
+</div>
+
+@code {
+    private string searchTerm = "";
+    private string selectedCategory = "overall";
+    private string selectedType = "all";
+    private string modelAName = "";
+    private string modelBName = "";
+    private bool isLoading = true;
+
+    private List<LLMModel> overallModels = new();
+    private List<LLMModel> codingModels = new();
+    private List<LLMModel> openSourceModels = new();
+    private List<LLMModel> uniqueModels = new();
+
+    private LLMModel? ModelA => uniqueModels.FirstOrDefault(m => m.Name == modelAName);
+    private LLMModel? ModelB => uniqueModels.FirstOrDefault(m => m.Name == modelBName);
+
+    private IEnumerable<LLMModel> FilteredModels
+    {
+        get
+        {
+            IEnumerable<LLMModel> models = selectedCategory switch
+            {
+                "coding" => codingModels,
+                "opensource" => openSourceModels,
+                _ => overallModels
+            };
+
+            if (selectedType != "all")
+            {
+                models = models.Where(m => m.Type == selectedType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var term = searchTerm.ToLower();
+                return uniqueModels.Where(m => 
+                    m.Name.ToLower().Contains(term) || 
+                    m.Company.ToLower().Contains(term) || 
+                    m.Description.ToLower().Contains(term)
+                ).Take(12);
+            }
+
+            return models.Take(12);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        isLoading = true;
+        overallModels = await DataService.GetOverallModelsAsync();
+        codingModels = await DataService.GetCodingModelsAsync();
+        openSourceModels = await DataService.GetOpenSourceModelsAsync();
+        uniqueModels = await DataService.GetAllUniqueModelsAsync();
+        
+        if (uniqueModels.Count >= 2)
+        {
+            modelAName = uniqueModels[0].Name;
+            modelBName = uniqueModels[1].Name;
+        }
+        isLoading = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("blazorExtensions.initParticles");
+            await JSRuntime.InvokeVoidAsync("blazorExtensions.init3DCards");
+            await JSRuntime.InvokeVoidAsync("blazorExtensions.initCursorGlow");
+            await JSRuntime.InvokeVoidAsync("blazorExtensions.initBubbleEffects");
+        }
+    }
+
+    private void SelectCategory(string category)
+    {
+        selectedCategory = category;
+        selectedType = "all";
+        searchTerm = "";
+    }
+
+    private void SelectType(string type)
+    {
+        selectedType = type;
+    }
+
+    private void ClearSearch()
+    {
+        searchTerm = "";
+    }
+}
