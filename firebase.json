@@ -14,8 +14,48 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/_framework/**",
+        "destination": "/_framework/:splat"
+      },
+      {
+        "source": "/css/**",
+        "destination": "/css/:splat"
+      },
+      {
+        "source": "/js/**",
+        "destination": "/js/:splat"
+      },
+      {
+        "source": "/lib/**",
+        "destination": "/lib/:splat"
+      },
+      {
+        "source": "/**",
         "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|wasm|json|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "br"
+          }
+        ]
+      },
+      {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
+        ]
       }
     ]
   }
