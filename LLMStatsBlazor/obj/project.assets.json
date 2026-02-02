@@ -2141,11 +2141,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\LLMStatsBlazor.csproj",
+      "projectUniqueName": "C:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\LLMStatsBlazor.csproj",
       "projectName": "LLMStatsBlazor",
-      "projectPath": "c:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\LLMStatsBlazor.csproj",
+      "projectPath": "C:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\LLMStatsBlazor.csproj",
       "packagesPath": "C:\\Users\\Marhaba\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\obj\\",
+      "outputPath": "C:\\Users\\Marhaba\\OneDrive\\Desktop\\Webiste1\\LLMStatsBlazor\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Marhaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
