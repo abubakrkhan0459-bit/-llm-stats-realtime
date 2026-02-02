@@ -1,6 +1,7 @@
 # Build results
 LLMStatsBlazor/bin/
 LLMStatsBlazor/obj/
+publish/
 
 # User-specific files
 *.user

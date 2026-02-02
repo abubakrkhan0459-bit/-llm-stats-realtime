@@ -6,11 +6,17 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "LLMStatsBlazor/bin/Release/net10.0/wwwroot/wwwroot",
+    "public": "publish/wwwroot",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }

@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "LLMStatsBlazor",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-Em1NTho/hePrj9aEslPcYLV82UGaLv9yrenApCJRW2M=",
+    "hash": "sha256-RvOIxFEdsQPEIFQ6y7UYTzaGaLyZob/cldQN6xLB+9c=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.87vtjjdetb.js"
@@ -1242,16 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "LLMStatsBlazor.wasm",
-        "name": "LLMStatsBlazor.m086olzqhk.wasm",
-        "integrity": "sha256-Fqq9MUmfXY0Oq2W3ILI4whQqOTKn2ArLrU5vWmFJQSA=",
+        "name": "LLMStatsBlazor.d9kdusdzuz.wasm",
+        "integrity": "sha256-L/qa55bmCa369w40gaCQ8Q8ZyEVjvvTQcx4j0G680j4=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "LLMStatsBlazor.pdb",
-        "name": "LLMStatsBlazor.uhnw89o4a3.pdb",
-        "integrity": "sha256-8oosH4r6KVs8axe4GvPKDJITmu41DrhKmasWpYzO8Ok=",
+        "name": "LLMStatsBlazor.gqcuhz1mfl.pdb",
+        "integrity": "sha256-+EiJixe+OoclritmUxd/WeZg3zhEyDl61CEQkIgQSaA=",
         "cache": "force-cache"
       }
     ],

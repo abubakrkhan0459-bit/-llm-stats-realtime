@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: dotnet publish LLMStatsBlazor/LLMStatsBlazor.csproj -c Release -o
-          LLMStatsBlazor/bin/Release/net10.0/wwwroot
+      - run: dotnet publish LLMStatsBlazor/LLMStatsBlazor.csproj -c Release -o ./publish
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
