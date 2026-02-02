@@ -1,0 +1,28 @@
+# Build results
+LLMStatsBlazor/bin/
+LLMStatsBlazor/obj/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# NuGet packages
+*.nupkg
+
+# Logs
+firebase-debug.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Firebase cache
+.firebase/
+
+# Dependencies
+node_modules/
