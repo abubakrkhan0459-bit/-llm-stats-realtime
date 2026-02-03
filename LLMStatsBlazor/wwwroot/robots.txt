@@ -1,0 +1,53 @@
+# robots.txt for LLM Stats Realtime
+# https://llm-stats-realtime.web.app
+# Last updated: 2026-02-03
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://llm-stats-realtime.web.app/sitemap.xml
+
+# Crawl rate optimization
+Crawl-delay: 1
+
+# Prevent indexing of sensitive Firebase files
+Disallow: /firebase.json
+Disallow: /firestore.rules
+Disallow: /firestore.indexes.json
+Disallow: /appsettings.json
+Disallow: /appsettings.Development.json
+Disallow: /secrets.json
+
+# Prevent indexing of Blazor framework files (already handled by default, but explicit)
+Disallow: /_framework/
+Disallow: /_bin/
+Disallow: /obj/
+Disallow: /bin/
+
+# Prevent indexing of private/admin routes (if any)
+Disallow: /admin/
+Disallow: /api/internal/
+Disallow: /debug/
+
+# Allow important pages explicitly
+Allow: /$
+Allow: /dashboard$
+Allow: /rankings/
+Allow: /compare$
+Allow: /model/
+Allow: /about$
+Allow: /privacy-policy$
+Allow: /terms-of-service$

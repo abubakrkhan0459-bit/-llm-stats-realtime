@@ -1,8 +1,26 @@
 @page "/"
 @inject FirestoreDataService DataService
 @inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 
-<PageTitle>LLM Stats Realtime</PageTitle>
+<SEO 
+    MetaTitle="LLM Stats Realtime - Live LLM Rankings & Performance Analytics"
+    MetaDescription="Real-time LLM rankings and performance analytics. Compare GPT-4, Claude, Gemini, Llama and 50+ models. Live benchmarks, leaderboards, and AI model comparisons for developers and researchers."
+    MetaKeywords="LLM rankings, AI models, GPT-4, Claude, Gemini, Llama, AI benchmarks, language models, machine learning, AI performance, LLM comparison, LLM leaderboard, AI analytics"
+    CanonicalUrl="https://llm-stats-realtime.web.app/"
+    Robots="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    OgTitle="LLM Stats Realtime - Live LLM Rankings & Performance Analytics"
+    OgDescription="Real-time LLM rankings and performance analytics. Compare GPT-4, Claude, Gemini, Llama and 50+ models. Live benchmarks for AI developers."
+    OgImage="https://llm-stats-realtime.web.app/og-image.png"
+    OgImageWidth="1200"
+    OgImageHeight="630"
+    OgType="website"
+    TwitterCard="summary_large_image"
+    TwitterTitle="LLM Stats Realtime - Live LLM Rankings"
+    TwitterDescription="Real-time LLM rankings and performance analytics. Compare GPT-4, Claude, Gemini, Llama and more."
+    TwitterImage="https://llm-stats-realtime.web.app/og-image.png"
+    StructuredData="@GetStructuredData()"
+/>
 
 <div class="dashboard">
     <div class="hero-section">
@@ -328,5 +346,24 @@
     private void ClearSearch()
     {
         searchTerm = "";
+    }
+
+    private string GetStructuredData()
+    {
+        return @"{
+            ""@context"": ""https://schema.org"",
+            ""@type"": ""WebSite"",
+            ""name"": ""LLM Stats Realtime"",
+            ""url"": ""https://llm-stats-realtime.web.app/"",
+            ""description"": ""Real-time LLM rankings and performance analytics platform"",
+            ""potentialAction"": {
+                ""@type"": ""SearchAction"",
+                ""target"": {
+                    ""@type"": ""EntryPoint"",
+                    ""urlTemplate"": ""https://llm-stats-realtime.web.app/search?q={search_term_string}""
+                },
+                ""query-input"": ""required name=search_term_string""
+            }
+        }";
     }
 }

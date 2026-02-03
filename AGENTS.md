@@ -130,3 +130,28 @@ cd LLMStatsBlazor && dotnet build -c Release
 5. Add CSS using existing variables
 6. Update state object if needed
 7. Add event listeners
+
+## Development Tools
+
+### GitHub Pull Request Extension (VS Code)
+
+The user has installed the GitHub Pull Request extension for faster productivity. **Agents should leverage this when working with git:**
+
+**Capabilities:**
+- Create PRs directly from VS Code without opening browser
+- Review PR diffs inline with code comments
+- Check CI/build status within the editor
+- Checkout and test PR branches locally
+- Merge and approve PRs from VS Code
+
+**When to use:**
+- After committing changes that need review
+- Before pushing large feature branches
+- When user asks to "create a PR" or "review changes"
+- To quickly check if CI passes on recent commits
+
+**Commands available:**
+- `gh pr create` - Create PR from current branch
+- `gh pr checkout <number>` - Checkout a PR locally
+- `gh pr view` - View PR details in terminal
+- Use VS Code Command Palette: `GitHub Pull Requests: Create Pull Request`

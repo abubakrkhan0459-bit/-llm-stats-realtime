@@ -1,0 +1,67 @@
+{
+  "name": "LLM Stats Realtime - Live LLM Rankings & Analytics",
+  "short_name": "LLM Stats",
+  "description": "Real-time LLM rankings and performance analytics platform. Compare GPT-4, Claude, Gemini, Llama and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["productivity", "utilities", "developer tools"],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "LLM Stats Dashboard - Desktop View"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "LLM Stats Dashboard - Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Rankings",
+      "short_name": "Rankings",
+      "description": "View latest LLM rankings",
+      "url": "/rankings/overall",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Compare Models",
+      "short_name": "Compare",
+      "description": "Compare different LLM models",
+      "url": "/compare",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

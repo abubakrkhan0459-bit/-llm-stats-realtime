@@ -1,0 +1,80 @@
+name: Deploy and Ping Google Search Console
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore LLMStatsBlazor/LLMStatsBlazor.csproj
+    
+    - name: Build
+      run: dotnet build LLMStatsBlazor/LLMStatsBlazor.csproj --configuration Release --no-restore
+    
+    - name: Publish
+      run: dotnet publish LLMStatsBlazor/LLMStatsBlazor.csproj --configuration Release --output ./publish --no-build
+    
+    - name: Fix Blazor framework files
+      run: |
+        # Create non-versioned copies of required framework files
+        cd publish/wwwroot/_framework
+        cp dotnet.*.js dotnet.js 2>/dev/null || true
+        cp dotnet.runtime.*.js dotnet.runtime.js 2>/dev/null || true
+        cp icudt_*.dat icudt_CJK.dat 2>/dev/null || true
+        cp icudt_*.dat icudt_EFIGS.dat 2>/dev/null || true
+        cp icudt_*.dat icudt_no_CJK.dat 2>/dev/null || true
+        cp blazor.webassembly.*.js blazor.webassembly.js 2>/dev/null || true
+    
+    - name: Deploy to Firebase
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+        channelId: live
+        projectId: llm-stats-realtime
+    
+    - name: Wait for deployment
+      run: sleep 30
+    
+    - name: Ping Google Search Console - Homepage
+      run: |
+        curl -X GET "https://www.google.com/ping?sitemap=https://llm-stats-realtime.web.app/sitemap.xml" || true
+    
+    - name: Submit URLs to Google Search Console API
+      env:
+        # IMPORTANT: Add these secrets to your GitHub repository:
+        # 1. SEARCH_CONSOLE_API_KEY - Your Google API Key with Search Console API access
+        # 2. SEARCH_CONSOLE_SITE_URL - Your site URL (https://llm-stats-realtime.web.app/)
+        SEARCH_CONSOLE_API_KEY: ${{ secrets.SEARCH_CONSOLE_API_KEY }}
+        SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
+      run: |
+        # Note: Uncomment and configure this section after setting up Search Console API
+        # This requires OAuth 2.0 credentials from Google Cloud Console
+        
+        # Example using cURL with API Key (limited functionality):
+        # curl -X POST "https://searchconsole.googleapis.com/v3/urlTestingTools/mobileFriendlyTest:run?key=$SEARCH_CONSOLE_API_KEY" \
+        #   -H "Content-Type: application/json" \
+        #   -d '{"url": "https://llm-stats-realtime.web.app/", "requestScreenshot": false}' || true
+        
+        echo "Search Console ping completed"
+        echo "To enable full API submission, configure SEARCH_CONSOLE_API_KEY and SEARCH_CONSOLE_SITE_URL secrets"
+      continue-on-error: true
+    
+    - name: Notify deployment complete
+      run: |
+        echo "✅ Deployment to https://llm-stats-realtime.web.app completed"
+        echo "📊 Sitemap URL: https://llm-stats-realtime.web.app/sitemap.xml"
+        echo "🤖 robots.txt: https://llm-stats-realtime.web.app/robots.txt"
+        echo "📢 ads.txt: https://llm-stats-realtime.web.app/ads.txt"

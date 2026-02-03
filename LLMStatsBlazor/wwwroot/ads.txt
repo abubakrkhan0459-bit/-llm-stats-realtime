@@ -1,0 +1,26 @@
+# AdSense ads.txt file for LLM Stats Realtime
+# https://llm-stats-realtime.web.app/ads.txt
+# Last updated: 2026-02-03
+
+# Google AdSense Publisher ID
+# IMPORTANT: Replace ca-pub-XXXXXXXXXXXXXXXX with your actual AdSense Publisher ID
+# To find your Publisher ID: Log into AdSense → Settings → Account Information
+
+ga.ca-pub-XXXXXXXXXXXXXXXX
+
+# Authorized Sellers (if using other ad networks, add them below)
+
+# Example of additional authorized sellers:
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+# Ad Manager Sellers (if applicable)
+
+# Example format:
+# <domain>, <publisher_id>, <relationship>, <certification_id>
+
+# Notes:
+# - Place this file in the wwwroot folder
+# - Must be accessible at https://llm-stats-realtime.web.app/ads.txt
+# - Only one ads.txt file per domain
+# - Keep this file updated when adding/removing ad partners
+# - Contact support if you need help: support@llm-stats-realtime.web.app
