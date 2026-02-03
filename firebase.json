@@ -12,9 +12,25 @@
       "**/.git/**",
       "**/node_modules/**",
       "**/bin/**",
-      "**/obj/**"
+      "**/obj/**",
+      "verify-framework-files.sh",
+      "verify-framework-files.bat",
+      "SEO-ADSENSE-GUIDE.md",
+      "*.md"
     ],
     "rewrites": [
+      {
+        "source": "/_framework/**",
+        "destination": "/_framework/**"
+      },
+      {
+        "source": "/js/**",
+        "destination": "/js/**"
+      },
+      {
+        "source": "/css/**",
+        "destination": "/css/**"
+      },
       {
         "source": "/sitemap.xml",
         "destination": "/sitemap.xml"
@@ -48,28 +64,8 @@
         "destination": "/icon-512.png"
       },
       {
-        "source": "/_framework/blazor.webassembly.js",
-        "destination": "/_framework/blazor.webassembly.js"
-      },
-      {
-        "source": "/_framework/dotnet.js",
-        "destination": "/_framework/dotnet.js"
-      },
-      {
-        "source": "/_framework/dotnet.runtime.js",
-        "destination": "/_framework/dotnet.runtime.js"
-      },
-      {
-        "source": "/_framework/**",
-        "destination": "/_framework/**"
-      },
-      {
-        "source": "/js/**",
-        "destination": "/js/**"
-      },
-      {
-        "source": "/css/**",
-        "destination": "/css/**"
+        "source": "/og-image.png",
+        "destination": "/og-image.png"
       },
       {
         "source": "/**",
@@ -77,6 +73,85 @@
       }
     ],
     "headers": [
+      {
+        "source": "/**/*.wasm",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/wasm"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/**/*.dll",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/octet-stream"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/_framework/**/*.js",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/javascript; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/js/**/*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
+          }
+        ]
+      },
+      {
+        "source": "/css/**/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
+          }
+        ]
+      },
+      {
+        "source": "/**/*.png",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "/**/*.ico",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800"
+          }
+        ]
+      },
       {
         "source": "/sitemap.xml",
         "headers": [
@@ -96,6 +171,10 @@
           {
             "key": "Content-Type",
             "value": "text/plain; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
           }
         ]
       },
@@ -109,6 +188,10 @@
           {
             "key": "X-Content-Type-Options",
             "value": "nosniff"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
           }
         ]
       },
@@ -122,68 +205,6 @@
           {
             "key": "Cache-Control",
             "value": "public, max-age=86400"
-          }
-        ]
-      },
-      {
-        "source": "**/*.wasm",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/wasm"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      },
-      {
-        "source": "**/*.dll",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/octet-stream"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      },
-      {
-        "source": "**/*.js",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=86400"
-          }
-        ]
-      },
-      {
-        "source": "**/*.css",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=86400"
-          }
-        ]
-      },
-      {
-        "source": "**/*.png",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=604800"
-          }
-        ]
-      },
-      {
-        "source": "**/*.ico",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=604800"
           }
         ]
       },
@@ -213,33 +234,6 @@
           {
             "key": "Referrer-Policy",
             "value": "strict-origin-when-cross-origin"
-          }
-        ]
-      },
-      {
-        "source": "/og-image.png",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=604800"
-          }
-        ]
-      },
-      {
-        "source": "/icon-192.png",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=604800"
-          }
-        ]
-      },
-      {
-        "source": "/icon-512.png",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=604800"
           }
         ]
       },

@@ -26,16 +26,50 @@ jobs:
     - name: Publish
       run: dotnet publish LLMStatsBlazor/LLMStatsBlazor.csproj --configuration Release --output ./publish --no-build
     
-    - name: Fix Blazor framework files
+    - name: Verify Framework Files
       run: |
-        # Create non-versioned copies of required framework files
-        cd publish/wwwroot/_framework
-        cp dotnet.*.js dotnet.js 2>/dev/null || true
-        cp dotnet.runtime.*.js dotnet.runtime.js 2>/dev/null || true
-        cp icudt_*.dat icudt_CJK.dat 2>/dev/null || true
-        cp icudt_*.dat icudt_EFIGS.dat 2>/dev/null || true
-        cp icudt_*.dat icudt_no_CJK.dat 2>/dev/null || true
-        cp blazor.webassembly.*.js blazor.webassembly.js 2>/dev/null || true
+        echo "🔍 Verifying framework files exist..."
+        FRAMEWORK_DIR="./publish/wwwroot/_framework"
+        
+        # Check required versioned files
+        if [ ! -f "$FRAMEWORK_DIR/blazor.webassembly.66stpp682q.js" ]; then
+          echo "❌ ERROR: blazor.webassembly.66stpp682q.js not found!"
+          exit 1
+        fi
+        echo "✓ blazor.webassembly.66stpp682q.js found"
+        
+        if [ ! -f "$FRAMEWORK_DIR/dotnet.runtime.2tx45g8lli.js" ]; then
+          echo "❌ ERROR: dotnet.runtime.2tx45g8lli.js not found!"
+          exit 1
+        fi
+        echo "✓ dotnet.runtime.2tx45g8lli.js found"
+        
+        # Create non-versioned copies as backup for legacy support
+        cd "$FRAMEWORK_DIR"
+        
+        # Create blazor.webassembly.js backup
+        if [ ! -f "blazor.webassembly.js" ] && [ -f "blazor.webassembly.66stpp682q.js" ]; then
+          cp blazor.webassembly.66stpp682q.js blazor.webassembly.js
+          echo "✓ Created blazor.webassembly.js backup"
+        fi
+        
+        # Create dotnet.runtime.js backup
+        if [ ! -f "dotnet.runtime.js" ] && [ -f "dotnet.runtime.2tx45g8lli.js" ]; then
+          cp dotnet.runtime.2tx45g8lli.js dotnet.runtime.js
+          echo "✓ Created dotnet.runtime.js backup"
+        fi
+        
+        # Create dotnet.js from latest version
+        if [ ! -f "dotnet.js" ]; then
+          latest_dotnet=$(ls -t dotnet.*.js 2>/dev/null | grep -v runtime | grep -v native | head -1)
+          if [ -n "$latest_dotnet" ]; then
+            cp "$latest_dotnet" dotnet.js
+            echo "✓ Created dotnet.js from $latest_dotnet"
+          fi
+        fi
+        
+        echo "✅ Framework files verified and backed up!"
+      shell: bash
     
     - name: Deploy to Firebase
       uses: FirebaseExtended/action-hosting-deploy@v0
@@ -48,29 +82,19 @@ jobs:
     - name: Wait for deployment
       run: sleep 30
     
-    - name: Ping Google Search Console - Homepage
+    - name: Test Live URL
+      run: |
+        echo "🧪 Testing framework file accessibility..."
+        STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://llm-stats-realtime.web.app/_framework/blazor.webassembly.66stpp682q.js")
+        if [ "$STATUS" = "200" ]; then
+          echo "✅ Framework files accessible (HTTP 200)"
+        else
+          echo "⚠️ Framework file returned HTTP $STATUS - may need cache refresh"
+        fi
+    
+    - name: Ping Google Search Console
       run: |
         curl -X GET "https://www.google.com/ping?sitemap=https://llm-stats-realtime.web.app/sitemap.xml" || true
-    
-    - name: Submit URLs to Google Search Console API
-      env:
-        # IMPORTANT: Add these secrets to your GitHub repository:
-        # 1. SEARCH_CONSOLE_API_KEY - Your Google API Key with Search Console API access
-        # 2. SEARCH_CONSOLE_SITE_URL - Your site URL (https://llm-stats-realtime.web.app/)
-        SEARCH_CONSOLE_API_KEY: ${{ secrets.SEARCH_CONSOLE_API_KEY }}
-        SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
-      run: |
-        # Note: Uncomment and configure this section after setting up Search Console API
-        # This requires OAuth 2.0 credentials from Google Cloud Console
-        
-        # Example using cURL with API Key (limited functionality):
-        # curl -X POST "https://searchconsole.googleapis.com/v3/urlTestingTools/mobileFriendlyTest:run?key=$SEARCH_CONSOLE_API_KEY" \
-        #   -H "Content-Type: application/json" \
-        #   -d '{"url": "https://llm-stats-realtime.web.app/", "requestScreenshot": false}' || true
-        
-        echo "Search Console ping completed"
-        echo "To enable full API submission, configure SEARCH_CONSOLE_API_KEY and SEARCH_CONSOLE_SITE_URL secrets"
-      continue-on-error: true
     
     - name: Notify deployment complete
       run: |
