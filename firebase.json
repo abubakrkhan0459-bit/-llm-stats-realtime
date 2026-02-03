@@ -16,20 +16,36 @@
     ],
     "rewrites": [
       {
+        "source": "/sitemap.xml",
+        "destination": "/sitemap.xml"
+      },
+      {
+        "source": "/robots.txt",
+        "destination": "/robots.txt"
+      },
+      {
+        "source": "/ads.txt",
+        "destination": "/ads.txt"
+      },
+      {
+        "source": "/manifest.json",
+        "destination": "/manifest.json"
+      },
+      {
         "source": "/404.html",
         "destination": "/404.html"
       },
       {
         "source": "/_framework/**",
-        "destination": "/_framework/**"
+        "destination": "/_framework/:splat"
       },
       {
         "source": "/js/**",
-        "destination": "/js/**"
+        "destination": "/js/:splat"
       },
       {
         "source": "/css/**",
-        "destination": "/css/**"
+        "destination": "/css/:splat"
       },
       {
         "source": "/**",
