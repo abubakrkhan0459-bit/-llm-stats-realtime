@@ -126,6 +126,15 @@
 
 <body>
     <div id="app"></div>
+    
+    <!-- Redirect from firebaseapp.com to web.app domain -->
+    <script>
+        // Redirect firebaseapp.com to web.app
+        if (window.location.hostname === 'llm-stats-realtime.firebaseapp.com') {
+            window.location.replace('https://llm-stats-realtime.web.app' + window.location.pathname + window.location.search);
+        }
+    </script>
+    
     <script src="js/site.js"></script>
     <script>
         // Initialize cursor glow and bubble effects when DOM is ready
