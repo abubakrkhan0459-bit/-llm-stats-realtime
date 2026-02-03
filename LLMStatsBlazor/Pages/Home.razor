@@ -43,15 +43,7 @@
     <!-- Ad sizes: Mobile: 300x250, Tablet: 336x280, Desktop: 728x90 -->
     <!-- Usage: <GoogleAds AdUnitId="ca-pub-XXXXXXXXXXXXXXXX" Slot="0000000000" AdSize="responsive" IsReady="true" /> -->
 
-    @if (isLoading)
-    {
-        <div style="text-align: center; padding: 50px; color: var(--primary);">
-            <p>Loading models from Firebase placeholder...</p>
-        </div>
-    }
-    else
-    {
-        <div class="dashboard-grid">
+    <div class="dashboard-grid">
             <div class="column-left">
                 <div class="card card-secondary">
                     <div class="card-header">
@@ -252,7 +244,6 @@
     private string selectedType = "all";
     private string modelAName = "";
     private string modelBName = "";
-    private bool isLoading = true;
 
     private List<LLMModel> overallModels = new();
     private List<LLMModel> codingModels = new();
@@ -299,7 +290,6 @@
 
     private async Task LoadData()
     {
-        isLoading = true;
         overallModels = await DataService.GetOverallModelsAsync();
         codingModels = await DataService.GetCodingModelsAsync();
         openSourceModels = await DataService.GetOpenSourceModelsAsync();
@@ -310,7 +300,6 @@
             modelAName = uniqueModels[0].Name;
             modelBName = uniqueModels[1].Name;
         }
-        isLoading = false;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -408,5 +408,22 @@ window.blazorExtensions = {
                 this.style.transform = '';
             });
         });
+    },
+
+    initializeGoogleAd: function (config) {
+        // Placeholder for Google Ad initialization
+        // This prevents runtime errors when the component tries to initialize ads
+        console.log('Google Ad initialization called with config:', config);
+        
+        // Check if the container exists
+        const container = document.getElementById(config.containerId);
+        if (!container) {
+            console.warn('Ad container not found:', config.containerId);
+            return;
+        }
+        
+        // Placeholder - actual Google AdSense code would go here
+        // For now, just log that it would be initialized
+        console.log('Would initialize ad in container:', config.containerId);
     }
 };
