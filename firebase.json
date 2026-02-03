@@ -36,16 +36,40 @@
         "destination": "/404.html"
       },
       {
+        "source": "/favicon.png",
+        "destination": "/favicon.png"
+      },
+      {
+        "source": "/icon-192.png",
+        "destination": "/icon-192.png"
+      },
+      {
+        "source": "/icon-512.png",
+        "destination": "/icon-512.png"
+      },
+      {
+        "source": "/_framework/blazor.webassembly.js",
+        "destination": "/_framework/blazor.webassembly.js"
+      },
+      {
+        "source": "/_framework/dotnet.js",
+        "destination": "/_framework/dotnet.js"
+      },
+      {
+        "source": "/_framework/dotnet.runtime.js",
+        "destination": "/_framework/dotnet.runtime.js"
+      },
+      {
         "source": "/_framework/**",
-        "destination": "/_framework/:splat"
+        "destination": "/_framework/**"
       },
       {
         "source": "/js/**",
-        "destination": "/js/:splat"
+        "destination": "/js/**"
       },
       {
         "source": "/css/**",
-        "destination": "/css/:splat"
+        "destination": "/css/**"
       },
       {
         "source": "/**",
