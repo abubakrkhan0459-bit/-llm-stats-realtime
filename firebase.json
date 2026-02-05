@@ -20,54 +20,6 @@
     ],
     "rewrites": [
       {
-        "source": "/_framework/**",
-        "destination": "/_framework/**"
-      },
-      {
-        "source": "/js/**",
-        "destination": "/js/**"
-      },
-      {
-        "source": "/css/**",
-        "destination": "/css/**"
-      },
-      {
-        "source": "/sitemap.xml",
-        "destination": "/sitemap.xml"
-      },
-      {
-        "source": "/robots.txt",
-        "destination": "/robots.txt"
-      },
-      {
-        "source": "/ads.txt",
-        "destination": "/ads.txt"
-      },
-      {
-        "source": "/manifest.json",
-        "destination": "/manifest.json"
-      },
-      {
-        "source": "/404.html",
-        "destination": "/404.html"
-      },
-      {
-        "source": "/favicon.png",
-        "destination": "/favicon.png"
-      },
-      {
-        "source": "/icon-192.png",
-        "destination": "/icon-192.png"
-      },
-      {
-        "source": "/icon-512.png",
-        "destination": "/icon-512.png"
-      },
-      {
-        "source": "/og-image.png",
-        "destination": "/og-image.png"
-      },
-      {
         "source": "/**",
         "destination": "/index.html"
       }
