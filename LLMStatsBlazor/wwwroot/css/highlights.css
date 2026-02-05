@@ -1,6 +1,6 @@
 /* Highlights Section Styles */
 .highlights-section {
-    margin: 24px 0 48px 0;
+    margin: 16px 0 24px 0;
     padding: 0 4px;
     position: relative;
     z-index: 10;
@@ -20,15 +20,6 @@
 .highlights-section * {
     -ms-overflow-style: none;
     scrollbar-width: none;
-}
-
-.highlights-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-    padding-left: 8px;
 }
 
 .highlights-grid {
